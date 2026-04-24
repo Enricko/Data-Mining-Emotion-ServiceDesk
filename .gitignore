@@ -1,0 +1,23 @@
+# Environments
+venv/
+env/
+.env
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE / OS Files
+.DS_Store
+.vscode/
+.idea/
+
+# Data Files (Abaikan data bersih hasil generate untuk hemat space, data mentah tetap di-push)
+results/data/
+
+# Output Images (Opsional: hapus baris ini jika Anda ingin nge-push gambar visualisasi ke GitHub)
+results/images/
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
