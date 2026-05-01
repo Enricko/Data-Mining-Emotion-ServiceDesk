@@ -1,0 +1,5 @@
+Model,Parameters,Training Time (s),Accuracy,Precision,Recall,F1-Score
+Logistic Regression,"max_iter=1000, multi_class=ovr",2.2164,0.4367,0.5395,0.4367,0.4729
+Random Forest,n_estimators=100,66.5354,0.4423,0.519,0.4423,0.4707
+Linear SVC,default,2.8178,0.4217,0.5113,0.4217,0.4528
+Naive Bayes,default,0.1812,0.3885,0.5258,0.3885,0.4309

@@ -1,8 +1,12 @@
 import pandas as pd
+import urllib3
+urllib3.disable_warnings()
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, accuracy_score, precision_score, recall_score, f1_score
+import mlflow
+import mlflow.sklearn
 
 def train_and_extract_emotions(file_path, text_col='cleaned_text', label_col='sentiment'):
     print(f"Memuat data dari {file_path}...")
@@ -21,13 +25,24 @@ def train_and_extract_emotions(file_path, text_col='cleaned_text', label_col='se
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    print("\nMelatih model Logistic Regression (dengan penyeimbangan kelas otomatis)...")
-    model = LogisticRegression(class_weight='balanced', max_iter=1000, multi_class='ovr')
-    model.fit(X_train, y_train)
+    mlflow.set_experiment("Emotion_Modeling_Single")
+    with mlflow.start_run(run_name="Logistic_Regression_Balanced"):
+        print("\nMelatih model Logistic Regression (dengan penyeimbangan kelas otomatis)...")
+        model = LogisticRegression(class_weight='balanced', max_iter=1000, multi_class='ovr')
+        model.fit(X_train, y_train)
 
-    print("\nHasil Evaluasi Model Pada Data Test:")
-    y_pred = model.predict(X_test)
-    print(classification_report(y_test, y_pred, zero_division=0))
+        print("\nHasil Evaluasi Model Pada Data Test:")
+        y_pred = model.predict(X_test)
+        print(classification_report(y_test, y_pred, zero_division=0))
+
+        mlflow.log_metric("accuracy", accuracy_score(y_test, y_pred))
+        mlflow.log_metric("precision", precision_score(y_test, y_pred, average='weighted', zero_division=0))
+        mlflow.log_metric("recall", recall_score(y_test, y_pred, average='weighted', zero_division=0))
+        mlflow.log_metric("f1_score", f1_score(y_test, y_pred, average='weighted', zero_division=0))
+        mlflow.log_param("max_features", 5000)
+        mlflow.log_param("class_weight", "balanced")
+        mlflow.log_param("max_iter", 1000)
+        mlflow.sklearn.log_model(model, name="logistic_regression_model", input_example=X_train[:1])
 
     print("\nKata Kunci Paling Berpengaruh Untuk Setiap Emosi:")
     feature_names = vectorizer.get_feature_names_out()

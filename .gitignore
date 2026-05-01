@@ -21,3 +21,5 @@ results/images/
 
 # Jupyter Notebook Checkpoints
 .ipynb_checkpoints/
+
+mlruns/
