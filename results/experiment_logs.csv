@@ -1,5 +1,5 @@
-Model,Parameters,Training Time (s),Accuracy,Precision,Recall,F1-Score
-Logistic Regression,"max_iter=1000, multi_class=ovr",2.2164,0.4367,0.5395,0.4367,0.4729
-Random Forest,n_estimators=100,66.5354,0.4423,0.519,0.4423,0.4707
-Linear SVC,default,2.8178,0.4217,0.5113,0.4217,0.4528
-Naive Bayes,default,0.1812,0.3885,0.5258,0.3885,0.4309
+Run Name,vocab_size,max_len,embedding_dim,lstm_units,dropout_rate,learning_rate,batch_size,epochs_ran,Training Time (s),Accuracy,Precision,Recall,F1-Score
+BiLSTM_StackedLSTM,20000,30,128,128,0.4,0.001,64,8,176.56,0.4307,0.5689,0.4307,0.4738
+BiLSTM_DeepDropout,20000,30,128,128,0.5,0.0005,32,11,209.07,0.425,0.5643,0.425,0.4714
+BiLSTM_LargerVocab,20000,30,128,128,0.3,0.001,64,8,98.35,0.4226,0.5618,0.4226,0.4691
+BiLSTM_Baseline,10000,30,64,64,0.3,0.001,64,9,50.25,0.4105,0.5584,0.4105,0.4481
